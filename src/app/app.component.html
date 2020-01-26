@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1>Order Now</h1>
+    <p>Welcome to order calculator</p>
+  </div>
+  <div class="row">
+    <div class="col-3 font-weight-bold">
+      Add a new producto:
+    </div>
+    <div class="col">
+      <div ngbDropdown class="btn-block">
+        <button class="btn btn-outline-primary btn-block" id="dropdownBasic1" ngbDropdownToggle> <i
+            class="fas fa-utensils"></i> Select a plate</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="btn-block">
+          <button ngbDropdownItem *ngFor="let product of available" (click)="addProduct(product)">
+            <div class="row">
+              <div class="col-1">
+                  <i class="{{product.icon}}"></i>
+              </div>
+              <div class="col-8">
+                  {{product.name}}
+              </div>
+              <div class="col-3">
+                {{product.price}} €
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mt-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Tax</th>
+            <th scope="col">SubTotal</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of list">
+            <td><i class="{{product.icon}}"></i> {{product.name}}</td>
+            <td> {{product.price   | number:'1.2-2' | currency: '€' }} </td>
+            <td>  {{product.tax | percent }} </td>
+            <td>  {{product.price*(1+product.tax)  | number:'1.2-2' | currency: '€' }}</td>
+            <td> <button type="button" class="btn btn-danger btn-block" (click)="removeProduct(product)"><i class="fas fa-times"></i> Remove </button>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td class="font-weight-bold">Total:</td>
+            <td class="font-weight-bold"> {{total() | number:'1.2-2' | currency: '€' }} </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="row justify-content-right">
+  <div class="col-12">
+    <ngb-alert *ngIf="successCheckin" type="success" (close)="successMessage = null">The order has been ordered!</ngb-alert>
+  </div>
+
+    <div class="offset-md-6 col-6">
+      <button type="button" (click)="checkin()" class="btn btn-success btn-block"><i class="fas fa-receipt"></i> Check-in</button>
+    </div>
+  </div>
+
+
+</div>
